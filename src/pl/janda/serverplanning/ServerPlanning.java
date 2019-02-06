@@ -14,11 +14,7 @@ public class ServerPlanning {
     }
 
     public int calculate() {
-        List<MachineResult> machineResults = new ArrayList<>();
-
-        for (int i = 1; i < virtualMachines.size() + 1; i++) {
-            machineResults.addAll(combinations(i, virtualMachines));
-        }
+        List<MachineResult> machineResults = combinations(virtualMachines);
 
         List<MachineResult> officialy = new ArrayList<>();
         machineResults.stream().sorted((o1, o2) -> o2.getAmount() - o1.getAmount()).forEachOrdered(machineResult -> {
@@ -26,32 +22,37 @@ public class ServerPlanning {
             if(machineResult.getVirtualMachines().stream().noneMatch(machine -> officialy.stream().anyMatch(official -> official.containMachine(machine)))) {
                 officialy.add(machineResult);
             }
-
         });
 
         return officialy.size();
     }
 
-    private List<MachineResult> combinations(int n, List<Machine> k) {
-        List<MachineResult> machineResults = new ArrayList<>();
+    private List<MachineResult> combinations(List<Machine> k) {
+        List<MachineResult> results = new ArrayList<>();
 
-        int amountArrays = (int)Math.pow(k.size(), n);
-        for(int i = 0; i < amountArrays; i++) {
-            machineResults.add(new MachineResult());
-        }
+        for (int n = 1; n < k.size() + 1; n++) {
+            List<MachineResult> machineResults = new ArrayList<>();
 
-        for(int j = 0; j < n; j++) {
-            int p = (int) Math.pow(k.size(), n - j - 1);
+            int amountArrays = (int)Math.pow(k.size(), n);
             for(int i = 0; i < amountArrays; i++) {
-                MachineResult c = machineResults.get(i);
-                int index = i / p % k.size();
-
-                if(haveSpaceForVirtualMachine(c, k.get(index)))
-                    c.tryAddVirtualMachine(k.get(index));
+                machineResults.add(new MachineResult());
             }
+
+            for(int j = 0; j < n; j++) {
+                int p = (int) Math.pow(k.size(), n - j - 1);
+                for(int i = 0; i < amountArrays; i++) {
+                    MachineResult c = machineResults.get(i);
+                    int index = i / p % k.size();
+
+                    if(haveSpaceForVirtualMachine(c, k.get(index)))
+                        c.tryAddVirtualMachine(k.get(index));
+                }
+            }
+
+            results.addAll(machineResults);
         }
 
-        return machineResults;
+        return results;
     }
 
     private boolean haveSpaceForVirtualMachine(MachineResult machineResult, Machine virtualMachine) {
