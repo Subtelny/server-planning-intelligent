@@ -1,7 +1,6 @@
 This simple library calculate how many servers (with specifed configuration) is needed to host a specifed amount of virtual machines.
 Using combinatoric algorithm, calculate the most optimized way to get a smallest number of needed servers.
 
-*Its just quest for 
 <hr>
 
 Difference between "intelligent" and "first fit" strategy:
