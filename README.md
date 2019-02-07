@@ -38,5 +38,5 @@ Usage:
 <br>
 <pre>
 ServerPlanning planning = new ServerPlanning(serverType, virtualMachines...);
-int serversAmounts = planning.calculate();
+int serversAmount = planning.calculate();
 </pre>
