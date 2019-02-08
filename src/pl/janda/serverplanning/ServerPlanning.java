@@ -33,14 +33,14 @@ public class ServerPlanning {
         for (int n = 1; n < k.size() + 1; n++) {
             List<MachineResult> machineResults = new ArrayList<>();
 
-            int amountArrays = (int)Math.pow(k.size(), n);
+            int amountArrays = (int) Math.pow(k.size(), n);
             for(int i = 0; i < amountArrays; i++) {
                 machineResults.add(new MachineResult());
             }
 
-            for(int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++) {
                 int p = (int) Math.pow(k.size(), n - j - 1);
-                for(int i = 0; i < amountArrays; i++) {
+                for (int i = 0; i < amountArrays; i++) {
                     MachineResult c = machineResults.get(i);
                     int index = i / p % k.size();
 
